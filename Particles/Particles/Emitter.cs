@@ -107,7 +107,7 @@ namespace Particles
             i++;
         }
 
-        public void DrawParticles(GameTime gameTime, SpriteBatch spriteBatch)
+        public void DrawParticles(SpriteBatch spriteBatch)
         {
             foreach (Particle particle in ParticleList)
             {
