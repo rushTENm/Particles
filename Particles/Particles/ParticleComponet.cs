@@ -16,8 +16,6 @@ namespace Particles
     {
         public List<Emitter> particleEmitterList;
 
-        Random random;
-
         public ParticleComponent(Game1 game)
         {
             // TODO: Construct any child components here
@@ -31,8 +29,6 @@ namespace Particles
         public void Initialize()
         {
             particleEmitterList = new List<Emitter>();
-
-            random = new Random();
         }
 
         public void LoadContent(ContentManager content)

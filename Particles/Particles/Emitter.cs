@@ -11,8 +11,6 @@ namespace Particles
     public class Emitter
     {
         // TODO: multiple emitters per loop !!
-        EmitterHelper emitterHelper = new EmitterHelper();
-
         public List<Particle> ParticleList { get; set; }
         public bool EmittedNewParticle { get; set; }
         public Particle LastEmittedParticle { get; set; }
@@ -33,6 +31,19 @@ namespace Particles
         private double emitterFrequency = 0;	// in ms
         private double timeSinceLastEmission = 0;
 
+        Random random = new Random();
+
+        public double RandomizedDouble(RandomMinMax randomMinMax)
+        {
+            double min = randomMinMax.Min;
+            double max = randomMinMax.Max;
+
+            if (min == max)
+                return max;
+            else
+                return min + (random.NextDouble() * (max - min));
+        }
+
         public Emitter()
         {
             Active = true;
@@ -52,7 +63,7 @@ namespace Particles
 
                     if (emitterFrequency == 0 || timeSinceLastEmission >= emitterFrequency)
                     {
-                        emitterFrequency = emitterHelper.RandomizedDouble(RandomEmissionInterval);
+                        emitterFrequency = RandomizedDouble(RandomEmissionInterval);
                         if (emitterFrequency == 0)
                         {
                             throw new Exception("emitter frequency cannot be below 0.1d !!");
@@ -96,10 +107,10 @@ namespace Particles
 
             Particle particle = new Particle(TextureList[i],
                                              Position,
-                                             (float)emitterHelper.RandomizedDouble(ParticleSpeed),
-                                             (float)emitterHelper.RandomizedDouble(ParticleDirection),
-                                             MathHelper.ToRadians((float)emitterHelper.RandomizedDouble(ParticleRotation)),
-                                             (float)emitterHelper.RandomizedDouble(RotationSpeed),
+                                             (float)RandomizedDouble(ParticleSpeed),
+                                             (float)RandomizedDouble(ParticleDirection),
+                                             MathHelper.ToRadians((float)RandomizedDouble(ParticleRotation)),
+                                             (float)RandomizedDouble(RotationSpeed),
                                              Opacity);
             ParticleList.Add(particle);
             EmittedNewParticle = true;
