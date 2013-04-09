@@ -18,11 +18,8 @@ namespace Particles
 
         ParticleComponent particleComponent;
 
-        Texture2D fire;
-        int fireFrameCounter = 0;
-        Vector2 firePosition = new Vector2(500, 350);
-        int fireWaitCounter = 0;
-   
+        SpriteAnimation fire;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,6 +36,8 @@ namespace Particles
             // TODO: Add your initialization logic here
             particleComponent = new ParticleComponent(this);
 
+            fire = new SpriteAnimation();
+
             base.Initialize();
         }
 
@@ -49,7 +48,8 @@ namespace Particles
 
             // TODO: use this.Content to load your game content here
             particleComponent.LoadContent(Content);
-            fire = Content.Load<Texture2D>("fire");
+
+            fire.Init(Content, "fire", new Vector2(530, 410), 4, 4, 14, 2, 1f);
         }
 
         protected override void UnloadContent()
@@ -66,17 +66,8 @@ namespace Particles
             // TODO: Add your update logic here
             particleComponent.Update(gameTime);
 
-            if (fireWaitCounter % 2 == 0)
-            {
-                if (fireFrameCounter > 14)
-                {
-                    fireFrameCounter = 0;
-                    fireWaitCounter = 0;
-                }
-                fireFrameCounter++;
-            }
-            fireWaitCounter++;
-            
+            fire.Update();
+
             base.Update(gameTime);
         }
 
@@ -87,17 +78,7 @@ namespace Particles
             // TODO: Add your drawing code here
             particleComponent.Draw(spriteBatch);
 
-            var width = fire.Width / 4;
-            var height = fire.Height / 4;
-
-            var row = fireFrameCounter / 4;
-            var column = fireFrameCounter % 4;
-
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(fire, firePosition, new Rectangle(column * width, row * height, width, height), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.FlipHorizontally, 0);
-
-            spriteBatch.End();
+            fire.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }
