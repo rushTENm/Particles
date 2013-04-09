@@ -18,6 +18,11 @@ namespace Particles
 
         ParticleComponent particleComponent;
 
+        Texture2D fire;
+        int fireFrameCounter = 0;
+        Vector2 firePosition = new Vector2(500, 350);
+        int fireWaitCounter = 0;
+   
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -44,6 +49,7 @@ namespace Particles
 
             // TODO: use this.Content to load your game content here
             particleComponent.LoadContent(Content);
+            fire = Content.Load<Texture2D>("fire");
         }
 
         protected override void UnloadContent()
@@ -60,6 +66,17 @@ namespace Particles
             // TODO: Add your update logic here
             particleComponent.Update(gameTime);
 
+            if (fireWaitCounter % 2 == 0)
+            {
+                if (fireFrameCounter > 14)
+                {
+                    fireFrameCounter = 0;
+                    fireWaitCounter = 0;
+                }
+                fireFrameCounter++;
+            }
+            fireWaitCounter++;
+            
             base.Update(gameTime);
         }
 
@@ -69,6 +86,18 @@ namespace Particles
 
             // TODO: Add your drawing code here
             particleComponent.Draw(spriteBatch);
+
+            var width = fire.Width / 4;
+            var height = fire.Height / 4;
+
+            var row = fireFrameCounter / 4;
+            var column = fireFrameCounter % 4;
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(fire, firePosition, new Rectangle(column * width, row * height, width, height), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.FlipHorizontally, 0);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

@@ -33,19 +33,6 @@ namespace Particles
 
         public void LoadContent(ContentManager content)
         {
-            Emitter fireEmitter = new Emitter();
-            fireEmitter.Active = true;
-            fireEmitter.TextureList.Add(content.Load<Texture2D>("fire"));
-            fireEmitter.RandomEmissionInterval = new RandomMinMax(330);
-            fireEmitter.ParticleLifeTime = 1350;
-            fireEmitter.ParticleDirection = new RandomMinMax(0);
-            fireEmitter.ParticleSpeed = new RandomMinMax(1f);
-            fireEmitter.ParticleRotation = new RandomMinMax(0);
-            fireEmitter.RotationSpeed = new RandomMinMax(0);
-            fireEmitter.ParticleFader = new ParticleFader(true, true, 0);
-            fireEmitter.ParticleScaler = new ParticleScaler(0.8f, 1f, 0, 1000);
-            fireEmitter.Position = new Vector2(640, 600);
-
             Emitter smokeEmitter = new Emitter();
             smokeEmitter.Active = true;
             smokeEmitter.TextureList.Add(content.Load<Texture2D>("smoke"));
@@ -59,7 +46,6 @@ namespace Particles
             smokeEmitter.ParticleScaler = new ParticleScaler(0.2f, 1.2f, 50, smokeEmitter.ParticleLifeTime);
             smokeEmitter.Position = new Vector2(640, 550);
 
-            particleEmitterList.Add(fireEmitter);
             particleEmitterList.Add(smokeEmitter);
         }
 
